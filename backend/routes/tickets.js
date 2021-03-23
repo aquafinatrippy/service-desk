@@ -35,4 +35,22 @@ router.delete("/ticket/:id", async (req, res) => {
   }
 });
 
+router.put("/ticket/:id", async (req, res) => {
+  try {
+    const ticket = await Ticket.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title,
+        description: req.body.description,
+        email: req.body.email,
+        priority: req.body.priority,
+      },
+      { new: true }
+    );
+    res.send(ticket);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 module.exports = router;
