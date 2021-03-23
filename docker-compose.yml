@@ -7,6 +7,8 @@ services:
       - "8080:8080"
     container_name: frontend-docker
     restart: always
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     links:
       - backend
 
