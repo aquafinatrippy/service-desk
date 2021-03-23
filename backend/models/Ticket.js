@@ -9,6 +9,16 @@ const ticketSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+  },
+  priority: {
+    type: Number,
+  },
+  tickerNr: {
+    type: Number,
+  },
 });
 
 const Ticket = mongoose.model("Ticket", ticketSchema);
