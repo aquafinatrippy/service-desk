@@ -16,15 +16,26 @@ services:
       - "8000:8000"
     container_name: backend-docker
     restart: always
-    links:
-      - db
 
-  db:
-    image: postgres:latest
+  mongodb:
+    container_name: mongo-dev
+    image: mongo
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=admin
+    #   - MONGO_INITDB_ROOT_PASSWORD=pass
     ports:
-      - "5432:5432"
-    container_name: database-docker
-    restart: always
+      - "27017:27017"
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    depends_on:
+      - mongodb
     environment:
-      POSTGRES_PASSWORD: verySecret
-      POSTGRES_DB: service_desk
+      # - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      # - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
+      - ME_CONFIG_MONGODB_SERVER=mongo-dev
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=ihavealongpassword
+    ports:
+      - "8081:8081"
