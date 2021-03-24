@@ -1,4 +1,5 @@
 <template>
+<v-container>
   <v-row>
     <div v-if="tickets.length === 0">
       <h2>There are no tasks</h2>
@@ -10,7 +11,7 @@
       v-bind:key="index"
       v-else
     >
-      <v-card class="mx-auto" max-width="344" outlined>
+      <v-card class="mx-auto"  outlined>
         <v-list-item three-line>
           <v-list-item-content>
             <div class="overline mb-4">
@@ -49,6 +50,7 @@
       </v-card>
     </v-col>
   </v-row>
+  </v-container>
 </template>
 
 <script>
