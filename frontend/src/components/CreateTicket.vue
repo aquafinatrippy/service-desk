@@ -8,7 +8,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Open Dialog
+          Create ticket
         </v-btn>
       </template>
       <v-card>
@@ -24,66 +24,24 @@
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-list three-line subheader>
-          <v-subheader>User Controls</v-subheader>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Content filtering</v-list-item-title>
-              <v-list-item-subtitle
-                >Set the content filtering level to restrict apps that can be
-                downloaded</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Password</v-list-item-title>
-              <v-list-item-subtitle
-                >Require password for purchase or use password to restrict
-                purchase</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list three-line subheader>
-          <v-subheader>General</v-subheader>
-          <v-list-item>
-            <v-list-item-action>
-              <v-checkbox v-model="notifications"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Notifications</v-list-item-title>
-              <v-list-item-subtitle
-                >Notify me about updates to apps or games that I
-                downloaded</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-action>
-              <v-checkbox v-model="sound"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Sound</v-list-item-title>
-              <v-list-item-subtitle
-                >Auto-update apps at any time. Data charges may
-                apply</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-action>
-              <v-checkbox v-model="widgets"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Auto-add widgets</v-list-item-title>
-              <v-list-item-subtitle
-                >Automatically add home screen widgets</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+        <v-container>
+          <v-text-field v-model="title" label="Title" clearable></v-text-field>
+          <v-text-field v-model="email" label="E-mail" clearable></v-text-field>
+          <v-textarea v-model="description" >
+            <template v-slot:label>
+              <div>Description</div>
+            </template>
+          </v-textarea>
+          <div>
+            <v-text>Priority</v-text>
+            <v-rating
+              v-model="rating"
+              background-color="indigo lighten-3"
+              color="indigo"
+              large
+            ></v-rating>
+          </div>
+        </v-container>
       </v-card>
     </v-dialog>
   </v-row>
@@ -95,9 +53,10 @@ export default {
   data() {
     return {
       dialog: false,
-      notifications: false,
-      sound: true,
-      widgets: false,
+      rating: 4,
+      title: "",
+      description: "",
+      email: ""
     };
   },
 };
