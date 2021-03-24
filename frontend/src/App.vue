@@ -6,9 +6,9 @@
 
     <v-main>
       <v-container class="text-center">
-        <v-text>Create and manage tickets.</v-text>
+        <h3>Create and manage tickets.</h3>
         <br />
-        <v-text>Get started right now!</v-text>
+        <h4>Get started right now!</h4>
       </v-container>
       <CreateTicket />
       <br />
@@ -28,9 +28,6 @@ export default {
   components: {
     CreateTicket,
     Tickets,
-  },
-  created() {
-    console.log(this.$store);
   },
   
 

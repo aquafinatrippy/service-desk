@@ -25,7 +25,16 @@ const ticketSchema = mongoose.Schema({
   tickerNr: {
     type: Number,
   },
-  created_at: { type: Date, required: true, default: Date.now },
+  created_at: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  status: {
+    type: String,
+    default: "open",
+    required: true,
+  },
 });
 
 const Ticket = mongoose.model("Ticket", ticketSchema);

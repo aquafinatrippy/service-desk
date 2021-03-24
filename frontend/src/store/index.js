@@ -41,7 +41,6 @@ export default new Vuex.Store({
     },
     async updateTicket({ commit }, ticketInfo) {
       try {
-        console.log(ticketInfo);
         const { title, description, email, rating, id } = ticketInfo;
         await axios.put(`http://localhost:8000/api/ticket/${id}`, {
           title,
@@ -60,6 +59,6 @@ export default new Vuex.Store({
   getters: {
     tickets: (state) => {
       return state.tickets;
-    },
+    }
   },
 });

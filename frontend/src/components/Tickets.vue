@@ -4,7 +4,12 @@
       <h2>There are no tasks</h2>
     </div>
     <div v-else>
-      <v-select :items="items" filled label="Sort"></v-select>
+      <v-select
+        :items="items"
+        @change="sortTickets()"
+        filled
+        label="Sort"
+      ></v-select>
       <v-row>
         <v-col
           sm="12"
@@ -14,7 +19,7 @@
         >
           <v-card class="mx-auto" color="#f6f6f6">
             <v-list-item three-line>
-              <v-list-item-content>
+              <v-list-item-content class="text-center">
                 <v-text-field
                   v-if="editAble === ticket._id"
                   v-model="ticket.email"
@@ -60,18 +65,12 @@
                   readonly
                 ></v-rating>
               </v-list-item-content>
+             
             </v-list-item>
 
-            <v-card-actions>
+            <v-card-actions class="justify-center">
               <v-btn
-                outlined
-                rounded
-                color="primary"
-                @click="editAble = ticket._id"
-              >
-                Edit ticket
-              </v-btn>
-              <v-btn
+                v-if="editAble === ticket._id"
                 outlined
                 rounded
                 color="primary"
@@ -81,19 +80,30 @@
                     description: ticket.description,
                     email: ticket.email,
                     rating: ticket.priority,
-                    id: ticket._id
-                  })
+                    id: ticket._id,
+                  });
+                  resetEdit();
                 "
               >
                 Save ticket
               </v-btn>
+              <v-btn
+                v-else
+                outlined
+                rounded
+                color="primary"
+                @click="editAble = ticket._id"
+              >
+                Edit ticket
+              </v-btn>
+
               <v-btn
                 outlined
                 rounded
                 color="error"
                 @click="deleteTicket(ticket._id)"
               >
-                close ticket
+                Delete ticket
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -104,7 +114,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "Tickets",
@@ -115,11 +125,16 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("getTickets");
+    this.getTickets();
   },
   computed: mapState(["tickets"]),
   methods: {
-    ...mapActions(["deleteTicket", "updateTicket"]),
+    ...mapActions(["deleteTicket", "updateTicket", "getTickets"]),
+    ...mapMutations(["sortTickets"]),
+    resetEdit() {
+      this.editAble = "";
+      return this.editAble;
+    },
   },
 };
 </script>
