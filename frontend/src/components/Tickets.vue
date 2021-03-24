@@ -16,10 +16,10 @@
 
         <v-card-actions>
           <v-btn outlined rounded text color="primary">
-            Close
+            Edit ticket
           </v-btn>
           <v-btn outlined rounded text color="error">
-            Delete
+            close ticket
           </v-btn>
         </v-card-actions>
       </v-card>
