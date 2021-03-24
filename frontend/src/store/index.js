@@ -23,6 +23,24 @@ export default new Vuex.Store({
       const tickets = this.tickets.filter((o) => o._id !== id);
       commit("SET_TICKETS", tickets);
     },
+    async createTicket({ commit }, ticketInfo) {
+      console.log(ticketInfo);
+      let nr = Math.floor(Math.random() * 999);
+      try {
+        await axios.post("http://localhost:8000/api/ticket", {
+          title: ticketInfo.title,
+          description: ticketInfo.description,
+          email: ticketInfo.email,
+          priority: ticketInfo.priority,
+          ticketNr: nr,
+        });
+        console.log();
+        const { data } = await axios.get("http://localhost:8000/api/tickets");
+        commit("SET_TICKETS", data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   modules: {},
   getters: {

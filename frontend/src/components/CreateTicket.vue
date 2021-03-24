@@ -16,10 +16,17 @@
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>Settings</v-toolbar-title>
+          <v-toolbar-title>Create ticket</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">
+            <v-btn
+              dark
+              text
+              @click="
+                dialog = false;
+                createTicket({title, description, email, rating});
+              "
+            >
               Save
             </v-btn>
           </v-toolbar-items>
@@ -27,7 +34,7 @@
         <v-container>
           <v-text-field v-model="title" label="Title" clearable></v-text-field>
           <v-text-field v-model="email" label="E-mail" clearable></v-text-field>
-          <v-textarea v-model="description" >
+          <v-textarea v-model="description">
             <template v-slot:label>
               <div>Description</div>
             </template>
@@ -48,16 +55,22 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "CreateTicket",
+
   data() {
     return {
       dialog: false,
       rating: 4,
       title: "",
       description: "",
-      email: ""
+      email: "",
     };
+  },
+  methods: {
+    ...mapActions(["createTicket"]),
   },
 };
 </script>
