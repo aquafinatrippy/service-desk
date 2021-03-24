@@ -39,6 +39,22 @@ export default new Vuex.Store({
         console.log(error);
       }
     },
+    async updateTicket({ commit }, ticketInfo) {
+      try {
+        console.log(ticketInfo);
+        const { title, description, email, rating, id } = ticketInfo;
+        await axios.put(`http://localhost:8000/api/ticket/${id}`, {
+          title,
+          description,
+          email,
+          priority: rating,
+        });
+        const { data } = await axios.get("http://localhost:8000/api/tickets");
+        commit("SET_TICKETS", data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   modules: {},
   getters: {

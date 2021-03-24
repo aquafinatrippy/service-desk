@@ -13,11 +13,11 @@ const ticketSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
-    validate: value => {
+    validate: (value) => {
       if (!validator.isEmail(value)) {
         throw new Error({ error: "Invalid Email address" });
       }
-    }
+    },
   },
   priority: {
     type: Number,
@@ -25,6 +25,7 @@ const ticketSchema = mongoose.Schema({
   tickerNr: {
     type: Number,
   },
+  created_at: { type: Date, required: true, default: Date.now },
 });
 
 const Ticket = mongoose.model("Ticket", ticketSchema);
