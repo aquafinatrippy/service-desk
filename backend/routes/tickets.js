@@ -6,7 +6,7 @@ router.get("/tickets", async (req, res) => {
     const tickets = await Ticket.find({});
     res.send(tickets);
   } catch (error) {
-    res.send(error);
+    res.status(400).send(error);
   }
 });
 
@@ -22,7 +22,7 @@ router.post("/ticket", async (req, res) => {
     await ticket.save();
     res.send(ticket);
   } catch (error) {
-    res.send(error);
+    res.status(400).send(error);
   }
 });
 
@@ -31,7 +31,7 @@ router.delete("/ticket/:id", async (req, res) => {
     const ticket = await Ticket.findByIdAndDelete(req.params.id);
     res.send(ticket);
   } catch (error) {
-    res.send(error);
+    res.status(400).send(error);
   }
 });
 
@@ -49,7 +49,7 @@ router.put("/ticket/:id", async (req, res) => {
     );
     res.send(ticket);
   } catch (error) {
-    res.send(error);
+    res.status(400).send(error);
   }
 });
 

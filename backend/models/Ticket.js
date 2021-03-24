@@ -1,4 +1,5 @@
 const mongoose = require("../database");
+const validator = require("validator");
 
 const ticketSchema = mongoose.Schema({
   title: {
@@ -12,6 +13,11 @@ const ticketSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
+    validate: value => {
+      if (!validator.isEmail(value)) {
+        throw new Error({ error: "Invalid Email address" });
+      }
+    }
   },
   priority: {
     type: Number,
