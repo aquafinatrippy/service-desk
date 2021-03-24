@@ -21,6 +21,7 @@
 import CreateTicket from "./components/CreateTicket";
 import Tickets from "./components/Tickets";
 
+
 export default {
   name: "App",
 
@@ -28,6 +29,10 @@ export default {
     CreateTicket,
     Tickets,
   },
+  created() {
+    console.log(this.$store);
+  },
+  
 
   data: () => ({
     //
