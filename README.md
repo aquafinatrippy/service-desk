@@ -10,6 +10,7 @@ This is a repo for service-desk testassigment.
 ## Using this repo
 
 Open in browser: `http://localhost:8080/`
+
 Running e2e test made possible by Cypress:
 
 1. `cd frontend`: Go to frontend folder
