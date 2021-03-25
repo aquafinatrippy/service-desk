@@ -19,4 +19,5 @@ Running e2e test made possible by Cypress:
 ## Extra info
 
 Front-end: Vue
+
 Back-end: Express
