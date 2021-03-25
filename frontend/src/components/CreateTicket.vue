@@ -7,7 +7,7 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+        <v-btn class="create" color="primary" dark v-bind="attrs" v-on="on">
           Create ticket
         </v-btn>
       </template>

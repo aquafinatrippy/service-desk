@@ -6,7 +6,7 @@
     <div v-else>
       <v-select
         :items="items"
-        @change="sortTickets()"
+        @change="filter = data.initialValue"
         filled
         label="Sort"
       ></v-select>
@@ -65,7 +65,6 @@
                   readonly
                 ></v-rating>
               </v-list-item-content>
-             
             </v-list-item>
 
             <v-card-actions class="justify-center">
@@ -120,8 +119,9 @@ export default {
   name: "Tickets",
   data() {
     return {
-      items: ["Priority"],
+      items: ["Priority", "Status"],
       editAble: "",
+      filter: "",
     };
   },
   mounted() {
