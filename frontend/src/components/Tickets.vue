@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div>
-       <select v-model="selected" @change="filtering(selected)">
+      <select v-model="selected" @change="filtering(selected)">
         <option value="" selected disabled hidden
           >Click here to select filter</option
         >
@@ -9,22 +9,21 @@
         <option>Open</option>
         <option>Ongoing</option>
         <option>Closed</option>
-        
       </select>
+    </div>
+    <div v-if="selected === 'Date'">
+      New to old
     </div>
     <div v-if="tickets.length === 0">
       <h2>There are no tickets</h2>
     </div>
     <div v-else>
-     
-
-      <v-row class="mt-3"> 
+      <v-row class="mt-3">
         <v-col
           sm="12"
           md="6"
           v-for="(ticket, index) in tickets"
           v-bind:key="index"
-          
         >
           <v-card class="mx-auto" color="#f6f6f6">
             <v-list-item three-line>
@@ -108,7 +107,7 @@
                     email: ticket.email,
                     rating: ticket.priority,
                     id: ticket._id,
-                    status: newStatus
+                    status: newStatus,
                   });
                   resetEdit();
                 "
@@ -152,9 +151,12 @@ export default {
       filter: "",
       selected: "",
       newStatus: "",
-       emailRules: [ 
-        v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-      ]
+      emailRules: [
+        (v) =>
+          !v ||
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          "E-mail must be valid",
+      ],
     };
   },
   mounted() {
