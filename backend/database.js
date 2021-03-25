@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 
-const dbpath = process.env.DB_STRING;
 
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect("mongodb://mongodb:27017/service-desk", {
+  .connect(process.env.DB_STRING, {
     useNewUrlParser: true,
     useFindAndModify: true,
     useUnifiedTopology: true,

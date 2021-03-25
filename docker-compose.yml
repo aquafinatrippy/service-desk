@@ -18,6 +18,8 @@ services:
       - "8000:8000"
     container_name: backend-docker
     restart: always
+    environment: 
+      - DB_STRING=mongodb://mongodb:27017/service-desk
 
   mongodb:
     container_name: mongo-dev
