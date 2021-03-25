@@ -32,7 +32,7 @@
         </v-toolbar>
         <v-container>
           <v-text-field v-model="title" label="Title" clearable></v-text-field>
-          <v-text-field v-model="email" label="E-mail" clearable></v-text-field>
+          <v-text-field :rules="emailRules" v-model="email" label="E-mail" clearable></v-text-field>
           <v-textarea v-model="description">
             <template v-slot:label>
               <div>Description</div>
@@ -66,6 +66,9 @@ export default {
       title: "",
       description: "",
       email: "",
+      emailRules: [ 
+        v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      ]
     };
   },
   methods: {

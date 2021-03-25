@@ -14,6 +14,20 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async filtering({ commit }, filterType) {
+      console.log(filterType);
+      if (filterType === "Date") {
+        const { data } = await axios.get("http://localhost:8000/api/tickets");
+        commit("SET_TICKETS", data.reverse());
+      }else if(filterType === "Ongoing" || filterType === "Closed" || filterType === "Open"){
+        const { data } = await axios.get("http://localhost:8000/api/tickets");
+        commit("SET_TICKETS", data.filter(x => x.status === filterType.toLowerCase()));
+      }
+       else {
+        const { data } = await axios.get("http://localhost:8000/api/tickets");
+        commit("SET_TICKETS", data);
+      }
+    },
     async getTickets({ commit }) {
       const { data } = await axios.get("http://localhost:8000/api/tickets");
       commit("SET_TICKETS", data);
@@ -41,12 +55,13 @@ export default new Vuex.Store({
     },
     async updateTicket({ commit }, ticketInfo) {
       try {
-        const { title, description, email, rating, id } = ticketInfo;
+        const { title, description, email, rating, id, status } = ticketInfo;
         await axios.put(`http://localhost:8000/api/ticket/${id}`, {
           title,
           description,
           email,
           priority: rating,
+          status
         });
         const { data } = await axios.get("http://localhost:8000/api/tickets");
         commit("SET_TICKETS", data);
@@ -59,6 +74,6 @@ export default new Vuex.Store({
   getters: {
     tickets: (state) => {
       return state.tickets;
-    }
+    },
   },
 });

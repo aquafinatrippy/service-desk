@@ -44,6 +44,7 @@ router.put("/ticket/:id", async (req, res) => {
         description: req.body.description,
         email: req.body.email,
         priority: req.body.priority,
+        status: req.body.status
       },
       { new: true }
     );

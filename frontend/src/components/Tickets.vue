@@ -4,12 +4,17 @@
       <h2>There are no tasks</h2>
     </div>
     <div v-else>
-      <v-select
-        :items="items"
-        @change="filter = data.initialValue"
-        filled
-        label="Sort"
-      ></v-select>
+      <select v-model="selected" @change="filtering(selected)">
+        <option value="" selected disabled hidden
+          >Click here to select filter</option
+        >
+        <option>Date</option>
+        <option>Open</option>
+        <option>Ongoing</option>
+        <option>Closed</option>
+        
+      </select>
+
       <v-row>
         <v-col
           sm="12"
@@ -20,11 +25,30 @@
           <v-card class="mx-auto" color="#f6f6f6">
             <v-list-item three-line>
               <v-list-item-content class="text-center">
+                <div v-if="editAble === ticket._id" class="custom-select">
+                  <select v-model="newStatus">
+                    <option value="" selected disabled hidden
+                      >Select ticket status</option
+                    >
+                    <option>open</option>
+                    <option>ongoing</option>
+                    <option>closed</option>
+                  </select>
+                </div>
+                <p
+                  v-else
+                  :class="
+                    ticket.status === 'open' ? 'green--text' : 'red--text'
+                  "
+                >
+                  {{ ticket.status }}
+                </p>
                 <v-text-field
                   v-if="editAble === ticket._id"
                   v-model="ticket.email"
                   label="E-mail"
                   clearable
+                  :rules="emailRules"
                 ></v-text-field>
                 <div v-else class="overline mb-4">
                   {{ ticket.email }}
@@ -80,6 +104,7 @@
                     email: ticket.email,
                     rating: ticket.priority,
                     id: ticket._id,
+                    status: newStatus
                   });
                   resetEdit();
                 "
@@ -119,9 +144,13 @@ export default {
   name: "Tickets",
   data() {
     return {
-      items: ["Priority", "Status"],
       editAble: "",
       filter: "",
+      selected: "",
+      newStatus: "",
+       emailRules: [ 
+        v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      ]
     };
   },
   mounted() {
@@ -129,7 +158,7 @@ export default {
   },
   computed: mapState(["tickets"]),
   methods: {
-    ...mapActions(["deleteTicket", "updateTicket", "getTickets"]),
+    ...mapActions(["deleteTicket", "updateTicket", "getTickets", "filtering"]),
     ...mapMutations(["sortTickets"]),
     resetEdit() {
       this.editAble = "";
@@ -138,3 +167,20 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+select {
+  // A reset of styles, including removing the default dropdown arrow
+  appearance: none;
+  // Additional resets for further consistency
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: 24px;
+  cursor: inherit;
+  line-height: inherit;
+}
+</style>
