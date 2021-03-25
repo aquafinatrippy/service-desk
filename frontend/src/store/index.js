@@ -7,30 +7,45 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     tickets: [],
+    fetching: false,
   },
   mutations: {
     SET_TICKETS(state, tickets) {
       state.tickets = tickets;
     },
+    START_FETCH(state) {
+      state.fetching = true;
+    },
+    STOP_FETCH(state) {
+      state.fetching = false;
+    },
   },
   actions: {
     async filtering({ commit }, filterType) {
-      console.log(filterType);
       if (filterType === "Date") {
         const { data } = await axios.get("http://localhost:8000/api/tickets");
         commit("SET_TICKETS", data.reverse());
-      }else if(filterType === "Ongoing" || filterType === "Closed" || filterType === "Open"){
+      } else if (
+        filterType === "Ongoing" ||
+        filterType === "Closed" ||
+        filterType === "Open"
+      ) {
         const { data } = await axios.get("http://localhost:8000/api/tickets");
-        commit("SET_TICKETS", data.filter(x => x.status === filterType.toLowerCase()));
-      }
-       else {
+        
+        const filtered = data.filter(
+          (x) => x.status === filterType.toLowerCase()
+        );
+        commit("SET_TICKETS", filtered);
+      } else {
         const { data } = await axios.get("http://localhost:8000/api/tickets");
         commit("SET_TICKETS", data);
       }
     },
     async getTickets({ commit }) {
+      commit("START_FETCH");
       const { data } = await axios.get("http://localhost:8000/api/tickets");
       commit("SET_TICKETS", data);
+      commit("STOP_FETCH");
     },
     async deleteTicket({ commit }, id) {
       await axios.delete(`http://localhost:8000/api/ticket/${id}`);
@@ -61,7 +76,7 @@ export default new Vuex.Store({
           description,
           email,
           priority: rating,
-          status
+          status,
         });
         const { data } = await axios.get("http://localhost:8000/api/tickets");
         commit("SET_TICKETS", data);

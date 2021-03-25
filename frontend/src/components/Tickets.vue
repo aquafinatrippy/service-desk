@@ -1,10 +1,7 @@
 <template>
   <v-container>
-    <div v-if="tickets.length === 0">
-      <h2>There are no tasks</h2>
-    </div>
-    <div v-else>
-      <select v-model="selected" @change="filtering(selected)">
+    <div>
+       <select v-model="selected" @change="filtering(selected)">
         <option value="" selected disabled hidden
           >Click here to select filter</option
         >
@@ -14,13 +11,20 @@
         <option>Closed</option>
         
       </select>
+    </div>
+    <div v-if="tickets.length === 0">
+      <h2>There are no tickets</h2>
+    </div>
+    <div v-else>
+     
 
-      <v-row>
+      <v-row class="mt-3"> 
         <v-col
           sm="12"
           md="6"
           v-for="(ticket, index) in tickets"
           v-bind:key="index"
+          
         >
           <v-card class="mx-auto" color="#f6f6f6">
             <v-list-item three-line>
@@ -170,9 +174,7 @@ export default {
 
 <style lang="scss" scoped>
 select {
-  // A reset of styles, including removing the default dropdown arrow
   appearance: none;
-  // Additional resets for further consistency
   background-color: transparent;
   border: none;
   padding: 0 1em 0 0;
