@@ -30,24 +30,7 @@
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-container>
-          <v-text-field v-model="title" label="Title" clearable></v-text-field>
-          <v-text-field :rules="emailRules" v-model="email" label="E-mail" clearable></v-text-field>
-          <v-textarea v-model="description">
-            <template v-slot:label>
-              <div>Description</div>
-            </template>
-          </v-textarea>
-          <div>
-            <v-text>Priority</v-text>
-            <v-rating
-              v-model="rating"
-              background-color="indigo lighten-3"
-              color="indigo"
-              large
-            ></v-rating>
-          </div>
-        </v-container>
+        
       </v-card>
     </v-dialog>
   </v-row>
