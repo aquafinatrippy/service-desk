@@ -1,121 +1,103 @@
 <template>
   <v-container>
-    
     <v-row class="mt-3">
-        <v-card class="mx-auto" color="#f6f6f6">
-          <v-list-item three-line>
-            <v-list-item-content class="text-center">
-              <div v-if="editAble === ticket._id" class="custom-select">
-                <select v-model="newStatus">
-                  <option value="" selected disabled hidden
-                    >Select ticket status</option
-                  >
-                  <option>open</option>
-                  <option>ongoing</option>
-                  <option>closed</option>
-                </select>
-              </div>
-              <p
-                v-else
-                :class="ticket.status === 'open' ? 'green--text' : 'red--text'"
-              >
-                {{ ticket.status }}
-              </p>
-              <v-text-field
-                v-if="editAble === ticket._id"
-                v-model="ticket.email"
-                label="E-mail"
-                clearable
-                :rules="emailRules"
-              ></v-text-field>
-              <div v-else class="overline mb-4">
-                {{ ticket.email }}
-              </div>
-              <v-text-field
-                v-if="editAble === ticket._id"
-                v-model="ticket.title"
-                label="Title"
-                clearable
-              ></v-text-field>
-              <v-list-item-title v-else class="headline mb-1">
-                {{ ticket.title }}
-              </v-list-item-title>
-              <v-textarea
-                v-model="ticket.description"
-                v-if="editAble === ticket._id"
-              >
-                <template v-slot:label>
-                  <div>Description</div>
-                </template>
-              </v-textarea>
-              <v-list-item-subtitle v-else>{{
-                ticket.description
-              }}</v-list-item-subtitle>
-              <v-rating
-                v-if="editAble === ticket._id"
-                v-model="ticket.priority"
-                background-color="indigo lighten-3"
-                color="indigo"
-                large
-              ></v-rating>
-              <v-rating
-                v-else
-                v-model="ticket.priority"
-                background-color="indigo lighten-3"
-                color="indigo"
-                small
-                readonly
-              ></v-rating>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-card-actions class="justify-center">
-            <v-btn
-              v-if="editAble === ticket._id"
-              outlined
-              rounded
-              color="primary"
-              @click="
-                updateTicket({
-                  title: ticket.title,
-                  description: ticket.description,
-                  email: ticket.email,
-                  rating: ticket.priority,
-                  id: ticket._id,
-                  status: newStatus,
-                });
-                resetEdit();
-              "
-            >
-              Save ticket
-            </v-btn>
-            <v-btn
+      <v-card width="100%" class="mx-auto" color="#f6f6f6">
+        <v-list-item three-line>
+          <v-list-item-content>
+            <div v-if="editAble === ticket._id" class="custom-select">
+              <select v-model="newStatus">
+                <option value="" selected disabled hidden
+                  >Select ticket status</option
+                >
+                <option>open</option>
+                <option>ongoing</option>
+                <option>closed</option>
+              </select>
+            </div>
+            <p
               v-else
-              outlined
-              rounded
-              color="primary"
-              @click="editAble = ticket._id"
+              :class="ticket.status === 'open' ? 'green--text' : 'red--text'"
             >
-              Edit ticket
-            </v-btn>
+              {{ ticket.status }}
+            </p>
 
-            <v-btn
-              outlined
-              rounded
-              color="error"
-              @click="deleteTicket(ticket._id)"
-            >
-              Delete ticket
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-    
+            <div class="overline mb-4">
+              {{ ticket.email }}
+            </div>
+
+            <v-list-item-title class="headline mb-1">
+              {{ ticket.title }}
+            </v-list-item-title>
+
+            <v-list-item-subtitle>{{
+              ticket.description
+            }}</v-list-item-subtitle>
+
+            <v-rating
+              v-model="ticket.priority"
+              background-color="indigo lighten-3"
+              color="indigo"
+              small
+              readonly
+            ></v-rating>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions class="justify-center">
+          <v-btn
+            v-if="editAble === ticket._id"
+            outlined
+            rounded
+            color="primary"
+            @click="
+              updateTicket({
+                title: ticket.title,
+                description: ticket.description,
+                email: ticket.email,
+                rating: ticket.priority,
+                id: ticket._id,
+                status: newStatus,
+              });
+              resetEdit();
+            "
+          >
+            Save ticket
+          </v-btn>
+          <!-- <v-btn
+            v-else
+            outlined
+            rounded
+            color="primary"
+            @click="editAble = ticket._id"
+          >
+            Edit ticket
+          </v-btn> -->
+          <v-dialog v-model="dialog" width="80%">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn outlined rounded color="primary" v-bind="attrs" v-on="on">
+                Edit ticket
+              </v-btn>
+            </template>
+            <EditTicket :ticketData="ticket" />
+          </v-dialog>
+
+          <v-btn
+            outlined
+            rounded
+            color="error"
+            @click="deleteTicket(ticket._id)"
+          >
+            Delete ticket
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-row>
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapMutations } from "vuex";
+import EditTicket from "./EditTicket";
 
 export default {
   name: "Ticket",
@@ -132,11 +114,11 @@ export default {
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "E-mail must be valid",
       ],
+      dialog: false,
     };
   },
   mounted() {
     this.getTickets();
-    console.log(this.tickets)
   },
   methods: {
     ...mapActions(["deleteTicket", "updateTicket", "getTickets", "filtering"]),
@@ -145,6 +127,9 @@ export default {
       this.editAble = "";
       return this.editAble;
     },
+  },
+  components: {
+    EditTicket,
   },
 };
 </script>

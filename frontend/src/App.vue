@@ -3,7 +3,6 @@
     <v-app-bar app color="primary" dark>
       <v-toolbar-title>Service desk</v-toolbar-title>
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
       <router-link to="/create">Create</router-link>
     </v-app-bar>
     <v-main>

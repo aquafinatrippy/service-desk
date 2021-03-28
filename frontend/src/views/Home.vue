@@ -2,12 +2,7 @@
   <div class="home">
     <v-container>
       <v-row>
-        <v-col
-          sm="12"
-          md="6"
-          v-for="(ticket, index) in tickets"
-          v-bind:key="index"
-        >
+        <v-col sm="12" v-for="(ticket, index) in tickets" v-bind:key="index">
           <Ticket :ticket="ticket" />
         </v-col>
       </v-row>
