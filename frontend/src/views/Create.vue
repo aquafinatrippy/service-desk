@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mt-4">
     <v-text-field v-model="title" label="Title" clearable></v-text-field>
     <v-text-field
       :rules="emailRules"
@@ -13,7 +13,7 @@
       </template>
     </v-textarea>
     <div>
-      <v-text>Priority</v-text>
+      <p>Priority</p>
       <v-rating
         v-model="rating"
         background-color="indigo lighten-3"
