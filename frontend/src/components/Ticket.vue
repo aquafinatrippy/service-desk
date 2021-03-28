@@ -4,20 +4,7 @@
       <v-card width="100%" class="mx-auto" color="#f6f6f6">
         <v-list-item three-line>
           <v-list-item-content>
-            <div v-if="editAble === ticket._id" class="custom-select">
-              <select v-model="newStatus">
-                <option value="" selected disabled hidden
-                  >Select ticket status</option
-                >
-                <option>open</option>
-                <option>ongoing</option>
-                <option>closed</option>
-              </select>
-            </div>
-            <p
-              v-else
-              :class="ticket.status === 'open' ? 'green--text' : 'red--text'"
-            >
+            <p :class="ticket.status === 'open' ? 'green--text' : 'red--text'">
               {{ ticket.status }}
             </p>
 
@@ -44,16 +31,6 @@
         </v-list-item>
 
         <v-card-actions class="justify-center">
-      
-          <!-- <v-btn
-            v-else
-            outlined
-            rounded
-            color="primary"
-            @click="editAble = ticket._id"
-          >
-            Edit ticket
-          </v-btn> -->
           <v-dialog v-model="dialog" width="80%">
             <template v-slot:activator="{ on, attrs }">
               <v-btn outlined rounded color="primary" v-bind="attrs" v-on="on">
@@ -86,16 +63,6 @@ export default {
   props: ["ticket"],
   data() {
     return {
-      editAble: "",
-      filter: "",
-      selected: "",
-      newStatus: "",
-      emailRules: [
-        (v) =>
-          !v ||
-          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "E-mail must be valid",
-      ],
       dialog: false,
     };
   },
@@ -103,10 +70,10 @@ export default {
     this.getTickets();
   },
   methods: {
-    ...mapActions(["deleteTicket", "updateTicket", "getTickets", "filtering"]),
+    ...mapActions(["deleteTicket", "getTickets", "filtering"]),
     ...mapMutations(["sortTickets"]),
     resetEdit() {
-      this.dialog = false
+      this.dialog = false;
     },
   },
   components: {
