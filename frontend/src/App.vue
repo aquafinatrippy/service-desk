@@ -1,17 +1,21 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <v-toolbar-title>Service desk</v-toolbar-title>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/create">Create</router-link>
-    </v-app-bar>
+    <Navbar />
     <v-main>
-     
-
       <router-view />
     </v-main>
   </v-app>
 </template>
+
+<script>
+import Navbar from "./components/Navbar";
+
+export default {
+  components: {
+    Navbar
+  }
+};
+</script>
 
 <style lang="scss">
 #app {

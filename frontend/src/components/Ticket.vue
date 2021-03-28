@@ -44,25 +44,7 @@
         </v-list-item>
 
         <v-card-actions class="justify-center">
-          <v-btn
-            v-if="editAble === ticket._id"
-            outlined
-            rounded
-            color="primary"
-            @click="
-              updateTicket({
-                title: ticket.title,
-                description: ticket.description,
-                email: ticket.email,
-                rating: ticket.priority,
-                id: ticket._id,
-                status: newStatus,
-              });
-              resetEdit();
-            "
-          >
-            Save ticket
-          </v-btn>
+      
           <!-- <v-btn
             v-else
             outlined
@@ -78,7 +60,7 @@
                 Edit ticket
               </v-btn>
             </template>
-            <EditTicket :ticketData="ticket" />
+            <EditTicket :reset="resetEdit" :ticketData="ticket" />
           </v-dialog>
 
           <v-btn
@@ -124,8 +106,7 @@ export default {
     ...mapActions(["deleteTicket", "updateTicket", "getTickets", "filtering"]),
     ...mapMutations(["sortTickets"]),
     resetEdit() {
-      this.editAble = "";
-      return this.editAble;
+      this.dialog = false
     },
   },
   components: {

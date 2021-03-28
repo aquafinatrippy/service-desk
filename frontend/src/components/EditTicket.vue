@@ -33,6 +33,9 @@
     <v-divider></v-divider>
 
     <v-card-actions>
+      <v-btn outlined rounded color="error">
+        Close edit
+      </v-btn>
       <v-spacer></v-spacer>
       <v-btn
         outlined
@@ -46,7 +49,8 @@
             rating,
             id,
             status,
-          })
+          });
+          reset();
         "
       >
         Save ticket
@@ -77,7 +81,7 @@ export default {
       priority: this.ticketData.priority || "",
     };
   },
-  props: ["ticketData"],
+  props: ["ticketData", "reset"],
   methods: {
     ...mapActions(["updateTicket"]),
   },
