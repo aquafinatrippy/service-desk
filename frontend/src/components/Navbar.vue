@@ -1,9 +1,9 @@
 <template>
   <v-app-bar app color="primary" dark>
     <v-container>
-      <v-toolbar-title>Service desk</v-toolbar-title>
+      <v-toolbar-title class="navTitle">Service desk</v-toolbar-title>
       <router-link class="routerLink" to="/">Tickets list</router-link> |
-      <router-link class="routerLink" to="/create">Create ticket</router-link>
+      <router-link class="routerLink create" to="/create">Create ticket</router-link>
     </v-container>
   </v-app-bar>
 </template>

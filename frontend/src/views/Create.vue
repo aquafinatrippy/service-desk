@@ -24,7 +24,8 @@
     <div>
       <v-btn
         dark
-        text
+        outlined
+        rounded
         color="primary"
         @click="
           createTicket({ title, description, email, rating });

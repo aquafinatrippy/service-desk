@@ -22,7 +22,7 @@ const ticketSchema = mongoose.Schema({
   priority: {
     type: Number,
   },
-  tickerNr: {
+  ticketNr: {
     type: Number,
   },
   created_at: {

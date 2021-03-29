@@ -3,6 +3,7 @@
     <v-container>
       <FilterTickets />
 
+
       <v-row>
         <v-col sm="12" v-for="(ticket, index) in tickets" v-bind:key="index">
           <Ticket :ticket="ticket" />
@@ -24,7 +25,7 @@ export default {
 
   components: {
     Ticket,
-    FilterTickets,
+    FilterTickets
   },
   created() {
     this.getTickets();

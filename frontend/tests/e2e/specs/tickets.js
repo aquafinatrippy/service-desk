@@ -3,7 +3,7 @@
 describe("Start", () => {
   it("Visits the app root url", () => {
     cy.visit("http://localhost:8080/");
-    cy.contains("h3", "Create and manage tickets.");
+    cy.contains(".navTitle", "Service desk");
   });
 });
 
@@ -21,7 +21,7 @@ describe("Ticket creating", () => {
       .contains("E-mail")
       .parent()
       .type("e2eTester@hot.ee");
-    cy.get(".v-toolbar__items button span")
+    cy.get("button span")
       .contains("Create ticket")
       .parent()
       .click();
@@ -55,13 +55,4 @@ describe("Edit ticket", () => {
   })
 });
 
-describe('Delete ticket', () => {
-  it("Clicks delete button", () => {
-    cy.get(".v-card")
-      .first()
-      .get("button span")
-      .contains("Delete ticket")
-      .parent()
-      .click();
-  })
-})
+
