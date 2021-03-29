@@ -38,6 +38,18 @@
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn
+        v-if="status === 'closed'"
+        @click="
+          deleteTicket(id);
+          reset();
+        "
+        outlined
+        rounded
+        color="primary"
+        >Save ticket</v-btn
+      >
+      <v-btn
+        v-else
         outlined
         rounded
         color="primary"
@@ -83,7 +95,7 @@ export default {
   },
   props: ["ticketData", "reset"],
   methods: {
-    ...mapActions(["updateTicket"]),
+    ...mapActions(["updateTicket", "deleteTicket"]),
   },
 };
 </script>

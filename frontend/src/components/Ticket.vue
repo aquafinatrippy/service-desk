@@ -44,15 +44,6 @@
             </template>
             <EditTicket :reset="resetEdit" :ticketData="ticket" />
           </v-dialog>
-
-          <v-btn
-            outlined
-            rounded
-            color="error"
-            @click="deleteTicket(ticket._id)"
-          >
-            Delete ticket
-          </v-btn>
         </v-card-actions>
       </v-card>
     </v-row>
@@ -75,7 +66,7 @@ export default {
     this.getTickets();
   },
   methods: {
-    ...mapActions(["deleteTicket", "getTickets", "filtering"]),
+    ...mapActions(["getTickets", "filtering"]),
     ...mapMutations(["sortTickets"]),
     resetEdit() {
       this.dialog = false;

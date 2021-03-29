@@ -26,7 +26,10 @@
         dark
         text
         color="primary"
-        @click="createTicket({ title, description, email, rating })"
+        @click="
+          createTicket({ title, description, email, rating });
+          $router.push({ path: '/' });
+        "
       >
         Create ticket
       </v-btn>
