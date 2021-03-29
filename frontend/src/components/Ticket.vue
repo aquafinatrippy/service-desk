@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row class="mt-3">
+    <v-row >
       <v-card width="100%" class="mx-auto" color="#f6f6f6">
         <v-list-item three-line>
           <v-list-item-content>

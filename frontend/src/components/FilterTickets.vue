@@ -33,7 +33,18 @@
         {{ byStatus === true ? `mdi-arrow-up` : `mdi-arrow-down` }}
       </v-icon></v-btn
     >
+    <div>
+    <v-chip
+      v-if="chip1"
+      class="ma-2"
+      close
+      @click:close="chip1 = false"
+    >
+      Closable
+    </v-chip>
   </div>
+  </div>
+  
 </template>
 
 <script>
@@ -46,6 +57,7 @@ export default {
       byDate: false,
       byPriority: false,
       byStatus: false,
+      chip1: true
     };
   },
   computed: {
