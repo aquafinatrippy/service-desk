@@ -27,6 +27,11 @@
               small
               readonly
             ></v-rating>
+            <div class="overline mb-4">
+              {{ ticket.created_at.slice(11, 16) }}
+              <br />
+              {{ ticket.created_at.slice(0, 10) }}
+            </div>
           </v-list-item-content>
         </v-list-item>
 

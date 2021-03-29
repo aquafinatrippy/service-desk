@@ -1,6 +1,8 @@
 <template>
   <div class="home">
     <v-container>
+      <FilterTickets />
+
       <v-row>
         <v-col sm="12" v-for="(ticket, index) in tickets" v-bind:key="index">
           <Ticket :ticket="ticket" />
@@ -13,18 +15,25 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import Ticket from "../components/Ticket";
+import FilterTickets from "../components/FilterTickets";
 
 // @ is an alias to /src
 
 export default {
   name: "Home",
+
   components: {
     Ticket,
+    FilterTickets,
   },
   created() {
     this.getTickets();
   },
-  computed: { ...mapGetters(["tickets"]) },
-  methods: { ...mapActions(["getTickets"]) },
+  computed: {
+    ...mapGetters(["tickets"]),
+  },
+  methods: {
+    ...mapActions(["getTickets"]),
+  },
 };
 </script>

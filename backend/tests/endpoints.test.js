@@ -13,19 +13,3 @@
 //     expect(res.status).toBe(200)
 //     done()
 // })
-
-const Ticket = require("../models/Ticket");
-
-it("Should save user to database", async (done) => {
-  const res = await request.post("/api/ticket").send({
-    title: "Zell",
-    email: "testing@gmail.com",
-  });
-
-  // Searches the user in the database
-  const ticket = await Ticket.findOne({ email: "testing@gmail.com" });
-  expect(ticket.name).toBeTruthy();
-  expect(ticket.email).toBeTruthy();
-
-  done();
-});

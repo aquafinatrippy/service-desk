@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import sort from "fast-sort";
 
 Vue.use(Vuex);
 
@@ -21,24 +22,25 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async filtering({ commit }, filterType) {
-      if (filterType === "Date") {
-        const { data } = await axios.get("http://localhost:8000/api/tickets");
-        commit("SET_TICKETS", data.reverse());
-      } else if (
-        filterType === "Ongoing" ||
-        filterType === "Closed" ||
-        filterType === "Open"
-      ) {
+    async sortTickets({ commit }, sortBy) {
+     
+      try {
         const { data } = await axios.get("http://localhost:8000/api/tickets");
         
-        const filtered = data.filter(
-          (x) => x.status === filterType.toLowerCase()
-        );
-        commit("SET_TICKETS", filtered);
-      } else {
-        const { data } = await axios.get("http://localhost:8000/api/tickets");
-        commit("SET_TICKETS", data);
+
+        let sortedData = sort(data).by([
+          { [sortBy[0].date]: (u) => u.created_at },
+          { [sortBy[0].priority]: (u) => u.priority },
+          { [sortBy[0].status]: (u) => u.status },
+        ]);
+        console.log(sort(data).[sortBy[0].date](u => u.created_at))
+        console.log(sort(data).[sortBy[0].priority](u => u.priority))
+        console.log(sort(data).[sortBy[0].status](u => u.status))
+        
+
+        commit("SET_TICKETS", sortedData);
+      } catch (error) {
+        console.log(error);
       }
     },
     async getTickets({ commit }) {
