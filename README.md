@@ -1,6 +1,6 @@
 # Introduction
 
-This is a repo for service-desk testassigment.
+This is a repo for service-desk application. 
 
 ## Installation
 
