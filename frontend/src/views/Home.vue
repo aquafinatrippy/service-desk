@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <v-container>
+      
       <div class="darkSwitch">
         <v-switch v-model="classicTable" :label="`Classic table`"></v-switch>
         <v-btn icon @click="toggle_dark_mode">
@@ -25,7 +26,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import Ticket from "../components/Ticket";
 import FilterTickets from "../components/FilterTickets";
 import TicketsTable from "../components/TicketsTable";
@@ -36,7 +37,7 @@ export default {
   name: "Home",
   data() {
     return {
-      classicTable: true,
+      classicTable: false,
     };
   },
 
@@ -68,7 +69,8 @@ export default {
     ...mapGetters(["tickets"]),
   },
   methods: {
-    ...mapActions(["getTickets"]),
+    ...mapActions(["getTickets", "sortBy"]),
+    ...mapMutations(["SORT_TICKETS"]),
     toggle_dark_mode: function() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
       localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
@@ -77,6 +79,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+$material-light: (
+  "background": #f6f6f6,
+);
 .darkSwitch {
   display: flex;
   justify-content: space-around;

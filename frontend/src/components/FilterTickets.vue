@@ -3,7 +3,7 @@
     <v-btn
       @click="
         byDate = !byDate;
-        sortTickets(sortFilter);
+        SORT_TICKETS({ key: 'created_at', status: byDate });
       "
       text
       >Date
@@ -14,7 +14,7 @@
     <v-btn
       @click="
         byPriority = !byPriority;
-        sortTickets(sortFilter);
+        SORT_TICKETS({ key: 'priority', status: byPriority });
       "
       text
       >Priority
@@ -25,7 +25,7 @@
     <v-btn
       @click="
         byStatus = !byStatus;
-        sortTickets(sortFilter);
+        SORT_TICKETS({ key: 'status', status: byStatus });
       "
       text
       >Status
@@ -33,22 +33,12 @@
         {{ byStatus === true ? `mdi-arrow-up` : `mdi-arrow-down` }}
       </v-icon></v-btn
     >
-    <div>
-    <v-chip
-      v-if="chip1"
-      class="ma-2"
-      close
-      @click:close="chip1 = false"
-    >
-      Closable
-    </v-chip>
+    
   </div>
-  </div>
-  
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
   name: "FilterTickets",
@@ -56,8 +46,7 @@ export default {
     return {
       byDate: false,
       byPriority: false,
-      byStatus: false,
-      chip1: true
+      byStatus: false
     };
   },
   computed: {
@@ -72,7 +61,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["sortTickets"]),
+    ...mapMutations(["SORT_TICKETS"]),
   },
 };
 </script>

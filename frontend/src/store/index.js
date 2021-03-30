@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     tickets: [],
-    fetching: false,
+    fetching: false
   },
   mutations: {
     SET_TICKETS(state, tickets) {
@@ -20,29 +20,28 @@ export default new Vuex.Store({
     STOP_FETCH(state) {
       state.fetching = false;
     },
+    SORT_TICKETS(state, sortKey) {
+     
+      const tickets = this.state.tickets;
+      let sorted
+
+
+      if(sortKey.status === false){
+        sorted = sort(tickets).asc([
+          u => u.[sortKey.key]
+        ]) 
+      }else{
+        sorted = sort(tickets).desc([
+        u => u.[sortKey.key]
+      ]) 
+      }
+      
+      state.tickets = sorted;
+  }
   },
   actions: {
-    async sortTickets({ commit }, sortBy) {
-     
-      try {
-        const { data } = await axios.get("http://localhost:8000/api/tickets");
-        
-
-        let sortedData = sort(data).by([
-          { [sortBy[0].date]: (u) => u.created_at },
-          { [sortBy[0].priority]: (u) => u.priority },
-          { [sortBy[0].status]: (u) => u.status },
-        ]);
-        console.log(sort(data).[sortBy[0].date](u => u.created_at))
-        console.log(sort(data).[sortBy[0].priority](u => u.priority))
-        console.log(sort(data).[sortBy[0].status](u => u.status))
-        
-
-        commit("SET_TICKETS", sortedData);
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    
+   
     async getTickets({ commit }) {
       commit("START_FETCH");
       const { data } = await axios.get("http://localhost:8000/api/tickets");
