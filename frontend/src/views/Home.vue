@@ -1,10 +1,14 @@
 <template>
   <div class="home">
     <v-container>
-      <v-switch
-        v-model="classicTable"
-        :label="`Classic table`"
-      ></v-switch>
+      <div class="darkSwitch">
+        <v-switch v-model="classicTable" :label="`Classic table`"></v-switch>
+        <v-btn icon @click="toggle_dark_mode">
+          Darkmode
+          <v-icon>mdi-theme-light-dark</v-icon></v-btn
+        >
+      </div>
+
       <div v-if="classicTable">
         <TicketsTable :tickets="tickets" />
       </div>
@@ -35,6 +39,23 @@ export default {
       classicTable: true,
     };
   },
+
+  mounted() {
+    const theme = localStorage.getItem("dark_theme");
+    if (theme) {
+      if (theme === "true") {
+        this.$vuetify.theme.dark = true;
+      } else {
+        this.$vuetify.theme.dark = false;
+      }
+    } else if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      this.$vuetify.theme.dark = true;
+      localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
+    }
+  },
   components: {
     Ticket,
     FilterTickets,
@@ -48,6 +69,17 @@ export default {
   },
   methods: {
     ...mapActions(["getTickets"]),
+    toggle_dark_mode: function() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
+    },
   },
 };
 </script>
+<style lang="scss" scoped>
+.darkSwitch {
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+</style>

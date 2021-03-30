@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row >
-      <v-card width="100%" class="mx-auto" color="#f6f6f6">
+      <v-card width="100%" class="mx-auto">
         <v-list-item three-line>
           <v-list-item-content>
             <p :class="ticket.status === 'open' ? 'green--text' : 'red--text'">
